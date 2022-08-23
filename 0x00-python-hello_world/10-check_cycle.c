@@ -1,23 +1,66 @@
-nclude "lists.h"
+:set paste
+i
+#ifndef LISTS_H
+#define LISTS_H
+
+#include <stdlib.h>
+
 /**
- * check_cycle - checks if a linked list contains a cycle
- * @list: linked list to check
+ * struct listint_s - singly linked list
+ * @n: integer
+ * @next: points to the next node
  *
- * Return: 1 if the list has a cycle, 0 if it doesn't
+ * Description: singly linked list node structure
+ * for Holberton project
+ */
+typedef struct listint_s
+{
+	int n;
+	struct listint_s *next;
+} listint_t;
+
+size_t print_listint(const listint_t *h);
+listint_t *add_nodeint(listint_t **head, const int n);
+void free_listint(listint_t *head);
+int check_cycle(listint_t *list);
+
+#endif /* LISTS_H */
+
+Esc, :wq
+add, commit, push
+
+type vi 10-check_cycle.c
+:set paste
+i
+
+#include <stdlib.h>
+#include "lists.h"
+
+/**
+ * check_cycle - Checks if a singly-linked list contains a cycle.
+ * @list: A singly-linked list.
+ *
+ * Return: If there is no cycle - 0.
+ *         If there is a cycle - 1.
  */
 int check_cycle(listint_t *list)
 {
-	listint_t *slow = list;
-	listint_t *fast = list;
+	listint_t *turtle, *hare;
 
-	if (!list)
+	if (list == NULL || list->next == NULL)
 		return (0);
-	while (slow && fast && fast->next)
+
+	turtle = list->next;
+	hare = list->next->next;
+
+	while (turtle && hare && hare->next)
 	{
-		slow = slow->next;
-		fast = fast->next->next;
-		if (slow == fast)
+		if (turtle == hare)
 			return (1);
+
+		turtle = turtle->next;
+		hare = hare->next->next;
 	}
+
 	return (0);
 }
