@@ -1,7 +1,10 @@
 #!/usr/bin/python3
-if __name__ == '__main__':
-    from sys import argv
-    numb = 0
-    for index in argv[1:]:
-        numb += int(index)
-    print('{:d}'.format(numb))
+from sys import argv
+if __name__ == "__main__":
+    result = 0
+    if len(argv) == 1:
+        print("0")
+    else:
+        for i in range(1, len(argv)):
+            result += int(argv[i])
+        print(result)
